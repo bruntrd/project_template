@@ -1,0 +1,100 @@
+<div class="row" >
+    <div class="col-sm-3 col-md-2"style="margin-right:0; padding-right:0;">
+        <div class="sidebar-nav">
+            <div class="navbar navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="visible-xs navbar-brand">Sidebar menu</span>
+                </div>
+                <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                    <h1><small>Edit Database Items</small></h1>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#profile">Home</a></li>
+                        <li><a href="#dbAdd">Add</a></li>
+                        <li class="active"><a href="#dbEdit">Edit</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#profile">Main</a></li>
+                                <li><a href="#dbAdd">Add</a></li>
+                                <li class="active"><a href="#dbEdit">Edit</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#dbEdit" ng-click="logout()">Logout</a></li>
+                        <li><a href="#">Views <span class="badge">1,118</span></a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9" style="padding-left:5%; margin-left:5%;">
+        <div class="jumbotron">
+            <h1 class="jumboHeader">Company Name <small>Logo and what not</small></h1>
+        </div>
+        <div class="header">
+            <h2>edit database items</h2>
+        </div>
+        <table class="dbItems">
+
+            <tr id = "item{{$index}}" class="liItem" ng-class-odd="'oddName'" ng-class-even="'evenName'" ng-repeat="(i, item) in items">
+                <th class="dbItem">{{item.name}}<th class="dbItem">{{item.desc}}</th>
+                <th data-toggle="modal" ng-click="edit(i)" data-target="#editItem" class="dbItem"><div class="glyphicon glyphicon-pencil"></div></th>
+                <th  ng-click="delete(i)" class="dbItem"><div class="glyphicon glyphicon-remove"></div></th>
+
+            </tr>
+    </table>
+</div>
+
+<div class="modal fade" id="editItem" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="editHeader">
+                    Edit {{item.name}}
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form class="editItems" name="editor">
+                    <div class="form-group">
+                        <input type="text" ng-model = "item.name" class="form-control"
+                               id="name" placeholder="Name" />
+                    </div>
+                    <div class="form-group">
+
+                        <input type="text" ng-model = "item.desc" class="form-control"
+                               id="desc" placeholder="Description" />
+                    </div>
+
+                    <button type="submit" class="btn btn-default" ng-click="editItem(item); reset(form)" data-dismiss="modal">Save Edit</button>
+                </form>
+
+
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

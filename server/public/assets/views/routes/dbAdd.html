@@ -1,0 +1,75 @@
+<div class="row" >
+    <div class="col-sm-3 col-md-2"style="margin-right:0; padding-right:0;">
+        <div class="sidebar-nav">
+            <div class="navbar navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="visible-xs navbar-brand">Sidebar menu</span>
+                </div>
+                <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                    <h1><small>Add DataBase Items</small></h1>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#profile">Home</a></li>
+                        <li class="active"><a href="#dbAdd">Add</a></li>
+                        <li><a href="#dbEdit">Edit</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Main</a></li>
+                                <li class="active"><a href="#dbAdd">Add</a></li>
+                                <li><a href="#dbEdit">Edit</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#dbAdd" ng-click="logout()">Logout</a></li>
+                        <li><a href="#">Views <span class="badge">1,118</span></a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9" style="padding-left:0; margin-left:0;">
+        <div class="jumbotron">
+            <h1>Company Name <small>Logo and what not</small></h1>
+        </div>
+        <h2 class="header" style="text-align: center;">Add Items</h2>
+
+        <div class="addContent">
+            <div class="addButton">
+
+                <button id="plusButton" ng-click="showField()" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-plus"></span></button>
+                <button id="minusButton" ng-show="showCancel" ng-click="hideField()" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-minus"></span></button>
+
+            </div>
+            <div  class="addField">
+                <div ng-show="addField" class="fields">
+                    <form class="form-addItem" name="addItem">
+                        <h2>Create Whatevs</h2>
+                        <div class="inputEntry">
+                            <input class="form-control" required="" type="text" placeholder="Name" ng-model="item.name" autofocus required><br>
+                            <input class="form-control" required="" type="text" placeholder="Description" ng-model="item.desc" autofocus required><br>
+                            <button type="submit" class="btn btn-primary" ng-click="createItem(item)">Create</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="itemAdded" ng-show="itemAdded">
+                    <p>Your Item has been added. To edit your items go to the edit tab</p>
+                </div>
+                <div class="itemAdded" ng-show="tryAgain">
+                    <p>Whaaaat? That didn't go through, maybe try refreshing the page and trying again</p>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

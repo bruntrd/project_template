@@ -1,0 +1,41 @@
+
+<nav class='navbar navbar-inverse' style="height:20px;">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="#register">Register</a></li>
+            <li><a href="#home">Login</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <br>
+
+
+        <div class="wrapper">
+
+        <form class="form-signin" name="registerForm">
+            <h2 class="form-signin-heading">Please Register</h2>
+            <input class="form-control" required="" type="text" name="userName" id="userName" ng-model="user.userName" placeholder="UserName">
+            <input class="form-control" required="" type="password" name="password" id="password" ng-model="user.password" placeholder="Password">
+            <!--<label class="checkbox">-->
+                <!--<input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember Me-->
+            <!--</label>-->
+            <p class="incorrectWarning" ng-show="incorrect">Username has already been taken, try again.</p>
+
+            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="register(user)">Register</button>
+            <br>
+
+            <a href="#login">Click here to go to login page</a>
+        </form>
+        </div>
+    </div>
+
+<div class="row" style="margin-top:40px;">
+    <div class="col-md-2 col-sm-3"></div>
+    <div class="col-md-10 col-sm-9">
+
+
+    </div>
+</div>
