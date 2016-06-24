@@ -17,8 +17,10 @@
 
         <form class="form-signin" name="registerForm">
             <h2 class="form-signin-heading">Please Register</h2>
-            <input class="form-control" required="" type="text" name="userName" id="userName" ng-model="user.userName" placeholder="UserName">
-            <input class="form-control" required="" type="password" name="password" id="password" ng-model="user.password" placeholder="Password">
+            <input style="margin-bottom:5px;" class="form-control" required="required" minlength="4" maxlength="12" type="text" name="userName" id="userName" ng-model="user.userName" placeholder="UserName">
+            <input style="margin-bottom:5px;" class="form-control" required="required" minlength="4" type="password" name="password" id="password" ng-model="user.password" placeholder="Password">
+            <input style="margin-bottom:5px;" class="form-control" required="required" minlength="4" maxlength="12" type="text" name="firstName" id="name" ng-model="user.firstName" placeholder="First Name">
+            <input style="margin-bottom:5px;" class="form-control" required="required" minlength="4" maxlength="12" type="text" name="lastName" id="lastName" ng-model="user.lastName" placeholder="Last Name">
             <!--<label class="checkbox">-->
                 <!--<input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember Me-->
             <!--</label>-->
@@ -27,7 +29,7 @@
             <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="register(user)">Register</button>
             <br>
 
-            <a href="#login">Click here to go to login page</a>
+            <a href="#home">Click here to go to login page</a>
         </form>
         </div>
     </div>

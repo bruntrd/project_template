@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var passport = require('passport');
 var dbRoute = require('./routes/db');
+var forgot = require('./routes/forgot');
 var jwt = require('jwt-simple');
 
 
@@ -33,6 +34,7 @@ MongoDB.once('open', function(err){
 
 require('./config/passport')(app);
 
+app.use('/forgot',forgot);
 app.use('/db', dbRoute);
 app.use('/auth', authRoutes)
 app.use('/', index);

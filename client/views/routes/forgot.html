@@ -1,0 +1,35 @@
+<nav class='navbar navbar-inverse' style="height:20px;">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="#forgot">Forgot</a></li>
+            <li><a href="#home">Login</a></li>
+            <li><a href="#register">Register</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <br>
+
+
+
+    <div class="wrapper">
+        <form class="form-signin" name="forgotPassword">
+            <h2 class="form-forgot-heading">Reset Password</h2>
+            <input style="margin-bottom:5px;" class="form-control" required="required" type="text" name="userName" id="userName" ng-model="forgot.username" placeholder="UserName">
+            <input style="margin-bottom:5px;" class="form-control" required="required" type="email" name="email" id="email" ng-model="forgot.email" placeholder="Email">
+            <!--<label class="checkbox">-->
+            <!--<input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember Me-->
+            <!--</label>-->
+
+            <p class="incorrectWarning" ng-show="incorrect" >Email Address not found, please enter try once again</p>
+            <p class="correctMessage" ng-show="emailSent">Email Sent, and check your email for new password</p>
+
+            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="reset(forgot)">Reset</button>
+            <br>
+
+            <a href="#register">Not registered? Click here</a>
+        </form>
+    </div>
+</div>

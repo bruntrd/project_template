@@ -2,7 +2,7 @@
 <nav class='navbar navbar-inverse' style="height:20px;">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#home">Login</a></li>
+            <li><a href="#home">Login</a></li>
             <li><a href="#register">Register</a></li>
 
         </ul>
@@ -17,12 +17,15 @@
     <div class="wrapper">
     <form class="form-signin" name="registerForm">
         <h2 class="form-signin-heading">Login</h2>
-        <input class="form-control" required="" type="text" name="userName" id="userName" ng-model="user.userName" placeholder="UserName">
-        <input class="form-control" required="" type="password" name="password" id="password" ng-model="user.password" placeholder="Password">
+        <input style="margin-bottom:5px;" class="form-control" required="required" type="text" name="userName" id="userName" ng-model="user.userName" placeholder="UserName">
+        <input style="margin-bottom:5px;" class="form-control" required="required" type="password" name="password" id="password" ng-model="user.password" placeholder="Password">
         <!--<label class="checkbox">-->
             <!--<input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember Me-->
         <!--</label>-->
-        <p class="incorrectWarning" ng-show="incorrect">Incorrect Username/Password, try again.</p>
+        <div class="incorrectWarning" ng-show="incorrect">
+            <p class="incorrectWarning" >Incorrect Username/Password, try again.</p>
+            <p class="incorrectWarning">Forget your password? <a href="#forgot">Click Here</a></p>
+        </div>
         <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login(user)">Login</button>
         <br>
 

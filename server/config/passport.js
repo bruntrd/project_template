@@ -7,7 +7,6 @@ module.exports = function(app){
     app.use(passport.session());
 
     passport.serializeUser(function(user,done){
-        console.log(user.username)
         //null is in place of err, and user is probably user.email or user.username
         done(null, user.username)
     });

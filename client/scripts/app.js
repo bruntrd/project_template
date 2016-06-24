@@ -16,13 +16,17 @@ myApp.config(['$routeProvider', function($routeProvider){
         templateUrl: "/assets/views/routes/profile.html",
         controller: "ProfileController"
     }).
+    when('/forgot', {
+        templateUrl: "/assets/views/routes/forgot.html",
+        controller: "ForgotController"
+    }).
     when('/dbAdd', {
         templateUrl: "/assets/views/routes/dbAdd.html",
-        controller: "dbAdd"
+        controller: "AddController"
     }).
     when('/dbEdit', {
         templateUrl: "/assets/views/routes/dbEdit.html",
-        controller: "dbEdit"
+        controller: "EditController"
     }).
     otherwise({
         redirectTo: "/home"
