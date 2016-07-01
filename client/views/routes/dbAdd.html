@@ -30,7 +30,6 @@
                             </ul>
                         </li>
                         <li><a href="#dbAdd" ng-click="logout()">Logout</a></li>
-                        <li><a href="#">Views <span class="badge">1,118</span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -54,9 +53,12 @@
                     <form class="form-addItem" name="addItem">
                         <h2>Create Whatevs</h2>
                         <div class="inputEntry">
-                            <input class="form-control" required="" type="text" placeholder="Name" ng-model="item.name" autofocus required><br>
-                            <input class="form-control" required="" type="text" placeholder="Description" ng-model="item.desc" autofocus required><br>
-                            <button type="submit" class="btn btn-primary" ng-click="createItem(item)">Create</button>
+                            <input class="form-control" required="required" type="text" placeholder="Name" ng-model="item.name" autofocus required><br>
+                            <input class="form-control"  type="text" placeholder="location" ng-model="item.location" autofocus required><br>
+                            <select class="form-control" required="required" id="channelId" ng-model = "item.channelId">
+                                <option ng-repeat="channelId in availableIds">{{channelId}}</option>
+                            </select>
+                            <button style="margin-top:10px;" type="submit" class="btn btn-primary" ng-click="createItem(item); getPods()">Create</button>
                         </div>
                     </form>
                 </div>

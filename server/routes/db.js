@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 var path = require('path')
 //var mongodb = require('mongodb').MongoClient;
-var whatevs = require('../models/whatevsModel');
+var pods = require('../models/podDB');
 
 router.post('/', function(req,res){
-
-        whatevs.create(req.body, function(err,post){
+        console.log(req.body);
+        console.log('post hit');
+        pods.create(req.body, function(err,post){
+            //console.log(post.body);
             res.send('done');
         })
 });
@@ -14,28 +16,26 @@ router.post('/', function(req,res){
 
 
 router.get('/', function(req,res){
-    whatevs.find(function(err,whateva){
-        res.json(whateva);
+    pods.find(function(err,pods){
+        res.json(pods);
     });
 
 });
 
 router.put('/', function(req,res){
-    var whateva = req.body;
+    var newPod = req.body;
     console.log(whateva);
-    whatevs.update({_id : whateva.id}, {$set : {name: whateva.name, desc: whateva.desc}}, function(err,data){
+    pods.update({_id : newPod.id}, {$set : {name: newPod.name, desc: newPod.desc}}, function(err,data){
         if (err) return handleError(err);
         res.send(data)
-    }
-    )
-
+    })
 });
 
 router.delete('/:id', function(req,res){
 
     console.log(req.params.id);
     var id = req.params.id;
-    whatevs.remove({_id : id}, function(err,removed){
+    pods.remove({_id : id}, function(err,removed){
         if (err) return handleError(err);
         res.send(removed);
     })

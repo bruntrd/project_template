@@ -42,7 +42,47 @@
         <div class="jumbotron">
             <h1>Company Name <small>Logo and what not</small></h1>
         </div>
-        <h2>Content</h2>
+        <div class="updateButtons">
+
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-xs-6">
+                <h1><small>Assign a doctor to a pod</small></h1>
+                <div class="assignPods">
+                    <form class="form" name="playlistForm">
+                        <div class="assignPlaylists">
+                            <div class="pods" ng-repeat="pod in pods">
+                                <p class="podNames">{{pod}}</p>
+                                <div class="dropdown">
+                                    <!--<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>-->
+                                    <select class="dropdown" ng-model="podVars[$index].name">
+                                        <option ng-repeat="doctor in doctorList">{{doctor.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-click="setPlaylists(podVars)" style="margin-top:10%">Submit Playlists</button>
+                    </form>
+                    <h1><small>Currently Selected</small></h1>
+                    <div class="selectedPlaylists">
+                        <div class="selected" ng-repeat="playlist in podVars">
+                            <p>{{pods[$index]}}</p><br>
+                            <p>{{playlist.name}}</p>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+        </div>
 
 
     </div>

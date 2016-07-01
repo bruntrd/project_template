@@ -9,12 +9,12 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var passport = require('passport');
 var dbRoute = require('./routes/db');
-var forgot = require('./routes/forgot');
+var contentmanager =require('./routes/contentmanager');
 var jwt = require('jwt-simple');
 
 
 
-var mongoURI = "mongodb://localhost:27017/passportTemplate";
+var mongoURI = "mongodb://localhost:27017/SummitOrtho";
 var MongoDB = mongoose.connect(mongoURI).connection;
 
 app.set("port", (process.env.PORT || 5000));
@@ -34,7 +34,7 @@ MongoDB.once('open', function(err){
 
 require('./config/passport')(app);
 
-app.use('/forgot',forgot);
+app.use('/contentmanager',contentmanager);
 app.use('/db', dbRoute);
 app.use('/auth', authRoutes)
 app.use('/', index);

@@ -68,6 +68,10 @@ myApp.controller('ProfileController', ['$scope','getToken','$http', function($sc
     $scope.logout = getToken.logout;
     $scope.user = getToken.getUser();
     $scope.id = getToken.getUserId();
+    $scope.pods = [];
+    $scope.podVars = [];
+    $scope.doctorList = [];
+    $scope.playlistIDS = [];
     console.log('session user', $scope.user);
     console.log('session id', $scope.id);
     //$scope.profile = {}
@@ -86,6 +90,143 @@ myApp.controller('ProfileController', ['$scope','getToken','$http', function($sc
 
                 }
             })
+    };
+
+    $scope.login  = function(){
+
+        $http.get('/contentmanager/login')
+            .then(function(response){
+                var ourToken = {
+                    token: response.data.apiToken
+                };
+                $scope.getPlaylists(ourToken);
+            });
+    };
+
+    $scope.getPlaylists = function(ourToken){
+        console.log(ourToken);
+        $http.post('/contentmanager/playlists', ourToken)
+            .then(function(response){
+                console.log(response.data.list);
+                angular.forEach(response.data.list, function(value,key){
+                    console.log(value);
+                    var i = 'doctorObj' + key;
+                    $scope[i] = {
+                        name : value.name,
+                        id : value.id
+                    }
+                    $scope.doctorList.push($scope[i]);
+                });
+            });
+    };
+
+    $scope.getPlayers = function(ourToken){
+        console.log(ourToken);
+        $http.post('/contentmanager/players')
+            .then(function(response){
+
+            })
+    };
+
+    $scope.getPods = function(){
+        $http.get('/db')
+            .then(function(res){
+                angular.forEach(res.data, function(value,key){
+                    $scope.pods.push(value.name);
+                    var podName = value.name;
+                    $scope[podName] = {
+                        pod: '',
+                        id : value.channelId
+                    };
+                    $scope.podVars.push($scope[podName]);
+
+                });
+
+            });
+    };
+
+    $scope.setPlaylists = function(playlists){
+        console.log('playlists being passed', playlists);
+
+
+        $http.get('/contentmanager/login')
+            .then(function(res) {
+                var ourToken = {
+                    token: res.data.apiToken
+                };
+                $http.post('/contentmanager/channels', ourToken)
+                    .then(function (res) {
+                        angular.forEach(res.data.list, function (value, key) {
+                            console.log('channel id', value.id);
+                            console.log('frame id', value.frameset.frames[0].id);
+                            var timeSlot = {
+                                channelID: value.id,
+                                frameID: value.frameset.frames[0].id,
+                                date: moment().format("YYYY-MM-DD"),
+                                token: ourToken.token,
+                                name: value.frameset.frames[0].name,
+                                playlist: playlists.name,
+                                timeslotID: ''
+                            };
+                            $http.post('/contentmanager/timeslots', timeSlot)
+                                .then(function (res) {
+                                    if (angular.equals({}, res.data)) {
+                                        $http.post('/contentmanager/scheduleSet', timeSlot)
+                                            .then(function (res) {
+                                                console.log('set schedule after no delete');
+                                            });
+
+                                    } else {
+                                        console.log('delete that schedule');
+                                        timeSlot.timeslotID = res.data.timeslots[0].id;
+                                        $http.post('/contentmanager/scheduleRemove', timeSlot)
+                                            .then(function (res) {
+                                                console.log('deleted schedule', res.data);
+
+                                                $http.post('/contentmanager/scheduleSet', timeSlot)
+                                                    .then(function (res) {
+                                                        console.log('set schedule after delete', res.data)
+                                                    })
+
+                                            })
+                                    }
+                                });
+                        });
+                    })
+            })
+        };
+
+    $scope.getTimeslots = function(){
+        $http.get('/contentmanager/login')
+            .then(function(res) {
+                console.log(res.data.apiToken);
+                var ourToken = {
+                    token: res.data.apiToken
+                };
+                $http.post('/contentmanager/timeslots', ourToken)
+                    .then(function(res){
+                        console.log(res.data);
+                    })
+            });
+
+
+    };
+
+
+
+    $scope.submitPlaylists = function(token, playlists){
+        for (var i= 0; i<playlists.length; i++){
+            var header = {
+                loginToken : token,
+                playlist : playlists[i].name
+            };
+            $http.post('contentmanager/channel', header)
+                .then(function(res){
+                    if (res.status == 200){console.log('cool')}
+                    else{console.log('some has occured')};
+                })
+
+        }
 
     };
 
@@ -95,10 +236,13 @@ myApp.controller('ProfileController', ['$scope','getToken','$http', function($sc
 
 
 
-
     //oninit
     $scope.validate();
-    ;
+    $scope.getPods();
+    $scope.login();
+    $scope.now = moment().format("YYYY-MM-DD");
+    console.log($scope.now);
+
 
 
 }]);
@@ -137,8 +281,12 @@ myApp.controller('AddController', ['$scope','getToken','$http', function($scope,
     $scope.tryAgain = false;
     $scope.item = {
         name : "",
-        desc : ""
+        location : "",
+        channelId : ""
     };
+    $scope.availableIds = [];
+    $scope.usedIds = [];
+    $scope.myArray = [22,23,24];
 
     var emptyItem = angular.copy($scope.item);
 
@@ -159,6 +307,65 @@ myApp.controller('AddController', ['$scope','getToken','$http', function($scope,
     };
 
     //functions
+
+    $scope.loginCM = function(){
+
+        $http.get('/contentmanager/login')
+            .then(function(response){
+                console.log(response.data);
+                var ourToken = {
+                    token: response.data.apiToken
+                };
+                console.log(ourToken.token);
+                $scope.getChannels(ourToken);
+            });
+
+    }
+
+    $scope.getChannels = function(token){
+
+        $http.post('/contentmanager/channels', token)
+            .then(function(res){
+                if (res.status==200) {
+                    $scope.availableIds = [];
+                    console.log(res.data);
+                    angular.forEach(res.data.list, function (value, key) {
+                        var ourID = (value.id).toString();
+                        console.log('ourId', ourID);
+                        console.log('value.id', value.id);
+                        if ($scope.usedIds.length > 0) {
+                            if ($scope.usedIds.indexOf(ourID) === -1){
+                                $scope.availableIds.push(ourID)
+                            } else {
+                                console.log('yoooo');
+                            }
+                        } else {
+                            $scope.availableIds.push(value.id);
+                        }
+
+                    });
+                } else {
+                    console.log(res.status);
+                }
+            });
+
+    };
+
+    $scope.getPods= function(){
+        $http.get('/db')
+            .then(function(res) {
+                if(res.status == 200) {
+                    angular.forEach(res.data, function (value, key) {
+
+                        $scope.usedIds.push(value.channelId);
+                    });
+                    console.log($scope.usedIds);
+                    $scope.loginCM();
+                } else {
+                    console.log(res.status)
+                }
+            })
+    };
 
     $scope.logout = getToken.logout;
 
@@ -182,11 +389,12 @@ myApp.controller('AddController', ['$scope','getToken','$http', function($scope,
         },5000)
 
 
-    }
+    };
 
 
     //on-init
-    $scope.validate()
+    $scope.validate();
+    $scope.getPods();
 
 
 
@@ -207,7 +415,7 @@ myApp.controller('EditController', ['$scope','getToken','$http', function($scope
 
     //functions
     $scope.getItems= function(){
-        $scope.items = []
+        $scope.items = [];
         $http.get('/db')
             .then(function(res) {
                 angular.forEach(res.data, function (value, key) {
@@ -259,6 +467,48 @@ myApp.controller('EditController', ['$scope','getToken','$http', function($scope
     $scope.getItems();
 
 
+
+}]);
+
+myApp.factory('cmActions', ['$http', function($http){
+
+
+    var login  = function(){
+
+        $http.get('/contentmanager/login')
+            .then(function(response){
+                console.log(response.data);
+                var ourToken = {
+                    token: response.data.apiToken
+                };
+                console.log(ourToken.token);
+                $scope.getPlaylists(ourToken);
+            });
+    };
+
+    var getPlaylists = function(ourToken){
+        console.log(ourToken);
+        $http.post('/contentmanager/playlists', ourToken)
+            .then(function(response){
+                console.log(response.data.list);
+                $scope.createLists(response.data.list);
+            });
+    };
+
+    var getPlayers = function(ourToken){
+        console.log(ourToken);
+        $http.post('/contentmanager/players')
+            .then(function(response){
+
+            })
+    };
+
+    return {
+
+        login : login,
+        getPlaylists : getPlaylists
+
+    }
 
 }]);
 

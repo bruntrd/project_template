@@ -3,7 +3,7 @@
 .body {
     overflow-x: scroll;
 }
-@media (min-width: 768px) {
+@media (min-width: 1000px) {
     .sidebar-nav .navbar .navbar-collapse {
         padding: 0;
         max-height: none;
@@ -98,6 +98,32 @@ input[type="password"] {
     float: right;
 
 
+}
+
+/*profile page*/
+
+.assignPods {
+    /*display: inline-flex;*/
+    width: 100%;
+}
+h1 {
+    margin-top: 15%;
+}
+.selectedPlaylists {
+
+    display: flex;
+}
+
+.selected {
+    flex-grow: 1;
+}
+
+.assignPlaylists {
+    display: flex;
+}
+
+.pods {
+    flex-grow: 1;
 }
 
 /*dbAdd*/

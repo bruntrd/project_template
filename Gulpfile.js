@@ -53,9 +53,9 @@ gulp.task('vendors', function() {
 //The accumulated filth of all their uncommented changes and commits will foam up about their waists
 //and the programmers will look up and shout "save us!" ... and I'll whisper, "alright."
 gulp.task('watch', function() {
-    gulp.watch('client/scripts/**/*', ['scripts']);
+    //gulp.watch('client/scripts/**/*', ['scripts']);
     gulp.watch(['client/styles/**/*', 'client/views/**/*'], ['assets']);
 });
 
 //The prettiest gulp there ever was
-gulp.task('default', ['scripts', 'assets', 'vendors', 'watch']);
+gulp.task('default', ['assets', 'vendors','scripts', 'watch']);
